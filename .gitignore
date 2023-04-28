@@ -1,0 +1,13 @@
+*.db
+*.log
+*.xml
+*.xml.bak
+*.user
+target/
+bin/
+obj/
+.idea/
+screenshots/
+logs/
+jenkins/
+packages/
