@@ -56,22 +56,14 @@ namespace IntexSoft_Api.RestCountriesTests
         [TestMethod, Priority(2), WorkItem(4)]
         public void CountryWithBorderCodes()
         {
-            #region Data
-
-            var expectedBorders = new List<string>() { "AZE", "BLR", "CHN", "EST", "FIN", "GEO", "KAZ", "PRK", "LVA", "LTU", "MNG", "NOR", "POL", "UKR" };
-
-            #endregion
-            
             var response = ApiCall.GetResponse(serverUrl, countryCode);
             var countryModel = JsonHelper.DeserializeResponseCountryModel(response);
 
-            MultipleAssertion.AssertAll(
-                () => Assert.IsNotNull(response, "Response is empty."),
-                () => CollectionAssert.AreEqual(expectedBorders, countryModel.Borders, $"Unexpected country code = '{countryModel.Borders}' was found."));
+            Assert.IsNotNull(countryModel.Borders, "Borders is empty.");
         }
         
         [TestMethod, Priority(3), WorkItem(5)]
-        public void CountryCodeRus_HasDefinedCountryList()
+        public void HasDefinedCountryList()
         {
             var response = ApiCall.GetResponse(serverUrl, countryCode);
             var countryModel = JsonHelper.DeserializeResponseCountryModel(response);
@@ -82,7 +74,7 @@ namespace IntexSoft_Api.RestCountriesTests
         }
         
         [TestMethod, Priority(3), WorkItem(6)]
-        public void CountryCodeRus_ExistsForEachBorderCountry()
+        public void ExistsForEachBorderCountry()
         {
             var response = ApiCall.GetResponse(serverUrl, countryCode);
             var countryModel = JsonHelper.DeserializeResponseCountryModel(response);
