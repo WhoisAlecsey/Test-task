@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using IntexSoft_Api.Assertions;
@@ -8,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace IntexSoft_Api.RestCountriesTests
 {
     [TestClass]
-    public class CountryBlrTests
+    public class CountryLvaTests
     {
         private string serverUrl;
         private string countryCode;
@@ -17,10 +18,10 @@ namespace IntexSoft_Api.RestCountriesTests
         public void TestInitialize()
         {
             serverUrl = Constants.ServerUrl;
-            countryCode = Constants.CountryCodes[Countries.Blr];
+            countryCode = Constants.CountryCodes[Countries.Lva];
         }
         
-        [TestMethod, Priority(1), WorkItem(8)]
+        [TestMethod, Priority(1), WorkItem(15)]
         public void StatusCodeIsOk()
         {
             var response = ApiCall.GetResponse(serverUrl, countryCode);
@@ -30,7 +31,7 @@ namespace IntexSoft_Api.RestCountriesTests
                 () => Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, $"Unexpected status code = '{response.StatusCode}' has been returned."));
         }
         
-        [TestMethod, Priority(1), WorkItem(9)]
+        [TestMethod, Priority(1), WorkItem(16)]
         public void JsonIsValid()
         {
             var response = ApiCall.GetResponse(serverUrl, countryCode);
@@ -38,10 +39,10 @@ namespace IntexSoft_Api.RestCountriesTests
 
             MultipleAssertion.AssertAll(
                 () => Assert.IsNotNull(countryModel, "Country Model is empty."),
-                () => Assert.AreEqual(Constants.NameBlr, countryModel.Name, $"Unexpected Name = '{countryModel.Name}' has been returned."));
+                () => Assert.AreEqual(Constants.NameLva, countryModel.Name, $"Unexpected Name = '{countryModel.Name}' has been returned."));
         }
         
-        [TestMethod, Priority(1), WorkItem(10)]
+        [TestMethod, Priority(1), WorkItem(17)]
         public void ResponseContainsAllRequiredFields()
         {
             var response = ApiCall.GetResponse(serverUrl, countryCode);
@@ -52,7 +53,7 @@ namespace IntexSoft_Api.RestCountriesTests
                 () => Assert.IsTrue(isResponseContainsAllRequiredFields, $"Fields which weren't found in the response: '{string.Join(", ", fieldsNotFound.ToArray())}'."));
         }
         
-        [TestMethod, Priority(2), WorkItem(11)]
+        [TestMethod, Priority(2), WorkItem(18)]
         public void CountryWithBorderCodes()
         {
             var response = ApiCall.GetResponse(serverUrl, countryCode);
@@ -61,7 +62,7 @@ namespace IntexSoft_Api.RestCountriesTests
             Assert.IsNotNull(countryModel.Borders, "Borders is empty.");
         }
         
-        [TestMethod, Priority(3), WorkItem(12)]
+        [TestMethod, Priority(3), WorkItem(19)]
         public void HasDefinedCountryList()
         {
             var response = ApiCall.GetResponse(serverUrl, countryCode);
@@ -69,10 +70,10 @@ namespace IntexSoft_Api.RestCountriesTests
 
             MultipleAssertion.AssertAll(
                 () => Assert.IsNotNull(response, "Response is empty."),
-                () => CollectionAssert.AreEquivalent(Constants.BordersBlr, countryModel.Borders, $"Unexpected country code = '{string.Join(", ", countryModel.Borders.ToArray())}' was found."));
+                () => CollectionAssert.AreEquivalent(Constants.BordersLva, countryModel.Borders, $"Unexpected country code = '{countryModel.Borders}' was found."));
         }
         
-        [TestMethod, Priority(3), WorkItem(13)]
+        [TestMethod, Priority(3), WorkItem(20)]
         public void ExistsForEachBorderCountry()
         {
             var response = ApiCall.GetResponse(serverUrl, countryCode);
@@ -83,7 +84,7 @@ namespace IntexSoft_Api.RestCountriesTests
             Assert.IsTrue(isAllCountriesContainsTheBorderCode, $"Country codes which weren't found in the response: '{string.Join(", ", codesNotFound.ToArray())}'.");
         }
         
-        [TestMethod, Priority(3), WorkItem(14)]
+        [TestMethod, Priority(3), WorkItem(21)]
         public async Task StatusCodeAndResponse_WrongCodeParameter()
         {
             #region Data
@@ -93,9 +94,9 @@ namespace IntexSoft_Api.RestCountriesTests
 
             #endregion
             
-            var responseNotFound = ApiCall.GetResponse(serverUrl, "BLT");
+            var responseNotFound = ApiCall.GetResponse(serverUrl, "LVS");
             var responseNotFoundModel = JsonHelper.DeserializeResponseModel(responseNotFound);
-            var responseBadRequest = await ApiCall.GetAsyncResponse(serverUrl, "Belarus");
+            var responseBadRequest = await ApiCall.GetAsyncResponse(serverUrl, "Latvia");
             var responseBadRequestModel = JsonHelper.DeserializeResponseModel(responseBadRequest);
 
             MultipleAssertion.AssertAll(
