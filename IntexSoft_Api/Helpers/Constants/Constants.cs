@@ -13,17 +13,20 @@ namespace IntexSoft_Api.Helpers.Constants
         public static readonly string NameBlr = "Belarus";
         public static readonly string NameLva = "Latvia";
         public static readonly string NamePol = "Poland";
+        public static readonly string NameLtu = "Lithuania";
         public static readonly List<string> BordersRus = new() { "AZE", "BLR", "CHN", "EST", "FIN", "GEO", "KAZ", "PRK", "LVA", "LTU", "MNG", "NOR", "POL", "UKR" };
         public static readonly List<string> BordersBlr = new() { "LVA", "LTU", "POL", "RUS", "UKR" };
         public static readonly List<string> BordersLva = new() { "BLR","EST","LTU","RUS" };
         public static readonly List<string> BordersPol = new() { "BLR","CZE","DEU","LTU","RUS","SVK","UKR" };
+        public static readonly List<string> BordersLtu = new() { "BLR","LVA","POL","RUS" };
 
         public static readonly Dictionary<Countries, string> CountryCodes = new()
         {
             {Countries.Rus, "RUS"},
             {Countries.Blr, "BLR"},
             {Countries.Lva, "LVA"},
-            {Countries.Pol, "POL"}
+            {Countries.Pol, "POL"},
+            {Countries.Ltu, "LTU"}
         };
     }
 }
