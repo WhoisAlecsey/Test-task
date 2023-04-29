@@ -4,6 +4,7 @@ namespace IntexSoft_Api.Helpers.Constants
     {
         Rus,
         Blr,
-        Lva
+        Lva,
+        Pol
     }
 }
