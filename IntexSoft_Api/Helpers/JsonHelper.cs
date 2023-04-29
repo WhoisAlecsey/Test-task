@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using IntexSoft_Api.Helpers.Constants;
 using IntexSoft_Api.Helpers.Models;
 using Newtonsoft.Json;
 using RestSharp;
@@ -85,7 +84,7 @@ namespace IntexSoft_Api.Helpers
         /// <param name="bordersList">List of country codes.</param>
         /// <param name="codesNotFound">Codes which weren't found.</param>
         /// <returns>Statement value.</returns>
-        public static bool IsAllCountriesContainsTheBorderCode(Countries countryCode, List<string> bordersList, out List<string> codesNotFound)
+        public static bool IsAllCountriesContainsTheBorderCode(string countryCode, List<string> bordersList, out List<string> codesNotFound)
         {
             var statement = true;
             var notFoundCodes = new List<string>();
@@ -95,7 +94,7 @@ namespace IntexSoft_Api.Helpers
                 {
                     var response = ApiCall.GetResponse(ServerUrl, borderCode);
                     var countryModel = DeserializeResponseCountryModel(response);
-                    if (countryModel.Borders.Contains(CountryCodes[countryCode]) != true)
+                    if (countryModel.Borders.Contains(countryCode) != true)
                     {
                         notFoundCodes.Add(borderCode);
                         statement = false;

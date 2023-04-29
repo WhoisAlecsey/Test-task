@@ -10,12 +10,14 @@ namespace IntexSoft_Api.Helpers.Constants
             "borders", "nativeName", "numericCode", "flags", "currencies", "languages", "translations", "flag", "regionalBlocs", "cioc", "independent"};
 
         public static readonly string NameRus = "Russian Federation";
+        public static readonly string NameBlr = "Belarus";
         public static readonly List<string> BordersRus = new() { "AZE", "BLR", "CHN", "EST", "FIN", "GEO", "KAZ", "PRK", "LVA", "LTU", "MNG", "NOR", "POL", "UKR" };
+        public static readonly List<string> BordersBlr = new() { "LVA", "LTU", "POL", "RUS", "UKR" };
 
         public static readonly Dictionary<Countries, string> CountryCodes = new()
         {
             {Countries.Rus, "RUS"},
-            {Countries.Byn, "BYN"}
+            {Countries.Blr, "BLR"}
         };
     }
 }
