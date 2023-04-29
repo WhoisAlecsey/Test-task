@@ -1,8 +1,7 @@
 using System;
-using System.Net.Http;
 using RestSharp;
 
-namespace IntexSoft_Api.Helper
+namespace IntexSoft_Api.Helpers
 {
     /// <summary>
     /// Contains functionality for the Api Call
@@ -17,10 +16,19 @@ namespace IntexSoft_Api.Helper
         /// <returns></returns>
         public static RestResponse GetResponse(string url, string countryCode)
         {
-            var client = new RestClient(url);
-            var request = new RestRequest();
-            request.AddParameter("codes", countryCode);
-            var response = client.Get(request);
+            RestResponse response;
+            try
+            {
+                var client = new RestClient(url);
+                var request = new RestRequest();
+                request.AddParameter("codes", countryCode); 
+                response = client.Get(request);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                response = null;
+            }
             
             return response;
         }

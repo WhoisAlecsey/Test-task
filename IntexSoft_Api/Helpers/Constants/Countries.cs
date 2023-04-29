@@ -1,4 +1,4 @@
-namespace IntexSoft_Api.Constants
+namespace IntexSoft_Api.Helpers.Constants
 {
     public enum Countries
     {
