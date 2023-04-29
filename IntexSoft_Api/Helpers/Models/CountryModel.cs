@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace IntexSoft_Api.Models
+namespace IntexSoft_Api.Helpers.Models
 {
     public class CountryModel
     {
