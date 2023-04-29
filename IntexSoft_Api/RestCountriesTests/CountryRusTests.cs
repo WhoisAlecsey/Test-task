@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using IntexSoft_Api.Assertions;
@@ -12,7 +13,7 @@ namespace IntexSoft_Api.RestCountriesTests
     public class CountryRusTests
     {
         [TestMethod, Priority(1), WorkItem(1)]
-        public void StatusCodeIsOk_ForCountryCodeRus()
+        public void StatusCodeIsOk()
         {
             var response = ApiCall.GetResponse(ServerUrl, CountryCodes[Countries.Rus]);
 
@@ -21,8 +22,19 @@ namespace IntexSoft_Api.RestCountriesTests
                 () => Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, $"Unexpected status code = '{response.StatusCode}' has been returned."));
         }
         
+        [TestMethod, Priority(1), WorkItem(2)]
+        public void ResponseContainsAllRequiredFields()
+        {
+            var response = ApiCall.GetResponse(ServerUrl, CountryCodes[Countries.Rus]);
+            var isResponseContainsAllRequiredFields = JsonFormatter.IsResponseContainsAllRequiredFields(response, RequiredResponseFields, out var fieldsNotFound);
+
+            MultipleAssertion.AssertAll(
+                () => Assert.IsNotNull(response, "Response is empty."),
+                () => Assert.IsTrue(isResponseContainsAllRequiredFields, $"Fields which weren't found in the response: '{String.Join(", ", fieldsNotFound.ToArray())}'."));
+        }
+        
         [TestMethod, Priority(2), WorkItem(3)]
-        public void CountryWithBorderCodes_CountryCodeRus()
+        public void CountryWithBorderCodes()
         {
             #region Data
 

@@ -23,5 +23,36 @@ namespace IntexSoft_Api.Helper
 
             return countryModel;
         }
+        
+        /// <summary>
+        /// This method verifies that response contains all required fields
+        /// </summary>
+        /// <param name="response">RestResponse value for parsing Content.</param>
+        /// <param name="requiredResponseFields">Required fields for verification.</param>
+        /// <param name="fieldsNotFound">Fields which weren't found.</param>
+        /// <returns>Statement value.</returns>
+        public static bool IsResponseContainsAllRequiredFields(RestResponse response, List<string> requiredResponseFields, out List<string> fieldsNotFound)
+        {
+            var statement = true;
+            var notFoundFields = new List<string>();
+            foreach (var field in requiredResponseFields)
+            {
+                try
+                {
+                    if (response.Content.Contains(field) != true)
+                    {
+                        notFoundFields.Add(field);
+                        statement = false;
+                    } 
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine(exc);
+                }
+            }
+            fieldsNotFound = notFoundFields;
+            
+            return statement;
+        }
     }
 }
