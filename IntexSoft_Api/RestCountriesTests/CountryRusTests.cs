@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using IntexSoft_Api.Assertions;
 using IntexSoft_Api.Helpers;
 using IntexSoft_Api.Helpers.Constants;
@@ -83,20 +84,25 @@ namespace IntexSoft_Api.RestCountriesTests
         }
         
         [TestMethod, Priority(3), WorkItem(7)]
-        public void StatusCodeAndResponse_WrongCodeParameter()
+        public async Task StatusCodeAndResponse_WrongCodeParameter()
         {
             #region Data
 
             var notFoundMessage = "Not Found";
+            var badRequestMessage = "Bad Request";
 
             #endregion
             
             var responseNotFound = ApiCall.GetResponse(ServerUrl, "RUZ");
             var responseNotFoundModel = JsonHelper.DeserializeResponseModel(responseNotFound);
+            var responseBadRequest = await ApiCall.GetAsyncResponse(ServerUrl, "Russia");
+            var responseBadRequestModel = JsonHelper.DeserializeResponseModel(responseBadRequest);
 
             MultipleAssertion.AssertAll(
-                () => Assert.AreEqual(notFoundMessage, responseNotFoundModel.Message, $"Unexpected message displayed = '{responseNotFound.ErrorMessage}'."),
-                () => Assert.AreEqual(HttpStatusCode.NotFound, responseNotFound.StatusCode, $"Unexpected status code = '{responseNotFound.StatusCode}' has been returned."));
+                () => Assert.AreEqual(notFoundMessage, responseNotFoundModel.Message, $"Unexpected message displayed = '{responseNotFoundModel.Message}'."),
+                () => Assert.AreEqual(HttpStatusCode.NotFound, responseNotFound.StatusCode, $"Unexpected status code = '{responseNotFound.StatusCode}' has been returned."),
+                () => Assert.AreEqual(badRequestMessage, responseBadRequestModel.Message, $"Unexpected message displayed = '{responseBadRequestModel.Message}'."),
+                () => Assert.AreEqual(HttpStatusCode.BadRequest, responseBadRequest.StatusCode, $"Unexpected status code = '{responseNotFound.StatusCode}' has been returned."));
         }
     }
 }
